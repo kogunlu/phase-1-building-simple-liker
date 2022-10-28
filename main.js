@@ -5,6 +5,42 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 
 
+const heartSelector = document.querySelectorAll('.like-glyph') // this will return an array
+
+
+for (var i = 0 ; i < heartSelector.length; i++) {   //I need to visit all elements of that array 
+  heartSelector[i].addEventListener('click' , likeButton , false ) ; 
+}
+
+function likeButton(e) {
+    const heart = e.target
+
+    mimicServerCall()
+    .then(() => {
+      
+      if(heart.innerText == FULL_HEART){
+        heart.innerText = EMPTY_HEART
+        heart.classList.remove('activated-heart')
+      }else{
+        heart.innerText = FULL_HEART
+        heart.classList.add('activated-heart')
+      }
+        
+    })
+    .catch((err) => {
+      document.querySelector('#modal').classList.remove('hidden')
+      document.querySelector('#modal-message').textContent = err.message
+      setTimeout(addHidden(), 3000)
+
+    })
+
+    function addHidden() {
+      const errorMessage = document.querySelector('#modal')
+      errorMessage.classList.add('hidden')
+    };
+};
+
+
 
 
 //------------------------------------------------------------------------------
